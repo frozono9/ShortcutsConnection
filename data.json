@@ -1,4 +1,7 @@
 {
   "message": "Hey! Here's your custom data 🎉",
-  "timestamp": "2025-08-06T18:20:00"
+  "timestamp": "2025-08-06T18:20:00",
+  "secretCommand": "launch_mode_active",
+  "customValue": 42,
+  "note": "This file serves as a reference. The actual data is managed by the server."
 }
