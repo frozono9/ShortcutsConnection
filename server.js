@@ -59,12 +59,12 @@ app.get('/api/value', (req, res) => {
 // API endpoint to update data from web interface
 app.post('/api/data', (req, res) => {
   try {
-    // Handle the title + input format
-    if (req.body.title && req.body.input) {
-      appData.message = `${req.body.title}\n${req.body.input}`;
-    } else if (req.body.message) {
-      appData.message = req.body.message;
-    }
+    // Update fields that were provided
+    Object.keys(req.body).forEach(key => {
+      if (key !== 'timestamp') { // Don't allow manual timestamp override
+        appData[key] = req.body[key];
+      }
+    });
     
     // Always update timestamp when data changes
     appData.timestamp = new Date().toISOString();

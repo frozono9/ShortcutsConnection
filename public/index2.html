@@ -59,7 +59,7 @@
             font-size: 1.1em;
         }
 
-        textarea, input {
+        textarea {
             width: 100%;
             padding: 15px;
             border: 2px solid #dee2e6;
@@ -67,15 +67,11 @@
             font-size: 16px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
             font-family: inherit;
-            min-height: 50px;
-        }
-
-        textarea {
             min-height: 120px;
             resize: vertical;
         }
 
-        textarea:focus, input:focus {
+        textarea:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
@@ -143,20 +139,17 @@
         </div>
 
         <div class="note">
-            <strong>💡 Tip:</strong> Enter your title and input below. They will be combined with a line break between them.
+            <strong>💡 Tip:</strong> Use line breaks to separate multiple parts of your message. For example:
+            <br><br>
+            <code>Prediction<br>Johnny</code>
         </div>
 
         <div id="statusMessage" class="status-message"></div>
         
         <form id="messageForm">
             <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" placeholder="e.g., Prediction" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="input">Input:</label>
-                <input type="text" id="input" name="input" placeholder="e.g., Johnny" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" placeholder="Enter your message here...&#10;Use line breaks for multiple parts:&#10;&#10;Prediction&#10;Johnny" required></textarea>
             </div>
             
             <button type="submit" class="btn">💾 Update Message</button>
@@ -178,12 +171,8 @@
         document.getElementById('messageForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Get the title and input values
-            const title = document.getElementById('title').value;
-            const input = document.getElementById('input').value;
-            
-            // Combine them with a line break
-            const message = `${title}\n${input}`;
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
             
             try {
                 const response = await fetch('/api/data', {
@@ -191,7 +180,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify(data)
                 });
                 
                 if (response.ok) {
@@ -212,15 +201,7 @@
                 const data = await response.json();
                 
                 if (data.message) {
-                    const parts = data.message.split('\n');
-                    if (parts.length >= 2) {
-                        document.getElementById('title').value = parts[0] || '';
-                        document.getElementById('input').value = parts[1] || '';
-                    } else {
-                        // If there's only one part, put it in title
-                        document.getElementById('title').value = parts[0] || '';
-                        document.getElementById('input').value = '';
-                    }
+                    document.getElementById('message').value = data.message;
                 }
             } catch (error) {
                 console.error('Failed to load current data:', error);
