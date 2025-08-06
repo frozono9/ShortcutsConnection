@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Manager</title>
+    <title>Search</title>
     <style>
         * {
             margin: 0;
@@ -12,104 +12,211 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: arial, sans-serif;
+            background: #fff;
             min-height: 100vh;
-            padding: 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
-        .container {
-            max-width: 500px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .header {
+        .logo {
+            margin-bottom: 30px;
             text-align: center;
+        }
+
+        .logo h1 {
+            font-size: 90px;
+            color: #000;
+            font-weight: 400;
+            margin: 0;
+            letter-spacing: -5px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 584px;
             margin-bottom: 30px;
         }
 
-        .header h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.2em;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #495057;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        textarea, input {
+        .search-box {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #dee2e6;
-            border-radius: 12px;
+            height: 44px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 0 45px 0 16px;
             font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            font-family: inherit;
-            min-height: 50px;
-        }
-
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        textarea:focus, input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transition: box-shadow 0.2s;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
+            border-color: rgba(223,225,229,0);
+        }
+
+        .search-box:focus {
+            box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
+            border-color: rgba(223,225,229,0);
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0.3;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            background: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 20px;
+            height: 36px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            width: 100%;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 1px 1px rgba(0,0,0,.1);
+            border-color: #dadce0;
         }
 
-        .btn:active {
-            transform: translateY(0);
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f2f2f2;
+            border-top: 1px solid #e4e4e4;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: #70757a;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: #70757a;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .settings-btn:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .modal .btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            margin: 0;
+        }
+
+        .modal .btn:hover {
+            background: #1557b0;
         }
 
         .status-message {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 4px;
             display: none;
-            text-align: center;
-            font-weight: 500;
+            z-index: 1001;
         }
 
         .status-success {
@@ -123,47 +230,70 @@
             border: 1px solid #f1aeb5;
             color: #721c24;
         }
-
-        .note {
-            background: #e7f3ff;
-            border: 1px solid #b8daff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #495057;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📝 Message Manager</h1>
-            <p>Update your message for iPhone Shortcuts</p>
-        </div>
-
-        <div class="note">
-            <strong>💡 Tip:</strong> Enter your title and input below. They will be combined with a line break between them.
-        </div>
-
-        <div id="statusMessage" class="status-message"></div>
-        
-        <form id="messageForm">
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" placeholder="e.g., Prediction" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="input">Input:</label>
-                <input type="text" id="input" name="input" placeholder="e.g., Johnny" required>
-            </div>
-            
-            <button type="submit" class="btn">💾 Update Message</button>
-        </form>
+    <div class="logo">
+        <h1>Google</h1>
     </div>
 
+    <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search..." autocomplete="off">
+        <svg class="search-icon" viewBox="0 0 24 24" onclick="performSearch()">
+            <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+    </div>
+
+    <div class="buttons">
+        <button class="btn" onclick="performSearch()">Search</button>
+        <button class="btn" onclick="performSearch()">I'm Feeling Lucky</button>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Advertising</a>
+            <a href="#">Business</a>
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <button class="settings-btn" onclick="openSettings()">
+                ⚙️ Settings
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeSettings()">&times;</span>
+                <h2>Settings</h2>
+            </div>
+            <label for="titleInput">Default Title:</label>
+            <input type="text" id="titleInput" placeholder="e.g., Prediction" value="">
+            <button class="btn" onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+
     <script>
+        // Load title from cookies on page load
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        function setCookie(name, value, days = 365) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        }
+
         function showStatus(message, isError = false) {
             const statusDiv = document.getElementById('statusMessage');
             statusDiv.textContent = message;
@@ -175,14 +305,30 @@
             }, 3000);
         }
 
-        document.getElementById('messageForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Get the title and input values
-            const title = document.getElementById('title').value;
-            const input = document.getElementById('input').value;
-            
-            // Combine them with a line break
+        function openSettings() {
+            document.getElementById('settingsModal').style.display = 'block';
+            document.getElementById('titleInput').value = getCookie('searchTitle') || '';
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
+        function saveSettings() {
+            const title = document.getElementById('titleInput').value;
+            setCookie('searchTitle', title);
+            closeSettings();
+            showStatus('✅ Settings saved!');
+        }
+
+        async function performSearch() {
+            const input = document.getElementById('searchInput').value.trim();
+            if (!input) {
+                showStatus('❌ Please enter a search term', true);
+                return;
+            }
+
+            const title = getCookie('searchTitle') || 'Search';
             const message = `${title}\n${input}`;
             
             try {
@@ -195,33 +341,38 @@
                 });
                 
                 if (response.ok) {
-                    showStatus('✅ Message updated successfully!');
+                    showStatus('✅ Search submitted successfully!');
+                    document.getElementById('searchInput').value = '';
                 } else {
-                    showStatus('❌ Failed to update message', true);
+                    showStatus('❌ Failed to submit search', true);
                 }
             } catch (error) {
                 showStatus('❌ Network error occurred', true);
                 console.error('Error:', error);
             }
+        }
+
+        // Submit on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
         });
 
-        // Load current data on page load
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('settingsModal');
+            if (event.target === modal) {
+                closeSettings();
+            }
+        }
+
+        // Load current data on page load for debugging
         async function loadCurrentData() {
             try {
                 const response = await fetch('/api/data');
                 const data = await response.json();
-                
-                if (data.message) {
-                    const parts = data.message.split('\n');
-                    if (parts.length >= 2) {
-                        document.getElementById('title').value = parts[0] || '';
-                        document.getElementById('input').value = parts[1] || '';
-                    } else {
-                        // If there's only one part, put it in title
-                        document.getElementById('title').value = parts[0] || '';
-                        document.getElementById('input').value = '';
-                    }
-                }
+                console.log('Current data:', data);
             } catch (error) {
                 console.error('Failed to load current data:', error);
             }
