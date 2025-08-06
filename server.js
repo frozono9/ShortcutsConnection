@@ -42,6 +42,22 @@ app.get('/api/data/:field', (req, res) => {
   }
 });
 
+// Simple text endpoints for easier Shortcuts integration (returns plain text)
+app.get('/api/message', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send(String(appData.message || 'No message set'));
+});
+
+app.get('/api/command', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send(String(appData.secretCommand || 'No command set'));
+});
+
+app.get('/api/value', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send(String(appData.customValue || '0'));
+});
+
 // API endpoint to update data from web interface
 app.post('/api/data', (req, res) => {
   try {
