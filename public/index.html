@@ -11,12 +11,64 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-color: #fff;
+            --text-color: #202124;
+            --text-secondary: #70757a;
+            --border-color: #dfe1e5;
+            --hover-border: rgba(223,225,229,0);
+            --shadow: rgba(64,60,67,.16);
+            --button-bg: #f8f9fa;
+            --button-text: #3c4043;
+            --button-border: #f8f9fa;
+            --button-hover-shadow: rgba(0,0,0,.1);
+            --button-hover-border: #dadce0;
+            --footer-bg: #f2f2f2;
+            --footer-border: #e4e4e4;
+            --modal-bg: rgba(0,0,0,0.4);
+            --modal-content-bg: #fff;
+            --input-bg: #fff;
+            --logo-color: #4285f4;
+            --primary-color: #1a73e8;
+            --primary-hover: #1557b0;
+            --modal-close-color: #aaa;
+            --modal-close-hover: #000;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #202124;
+                --text-color: #e8eaed;
+                --text-secondary: #9aa0a6;
+                --border-color: #5f6368;
+                --hover-border: rgba(95,99,104,0);
+                --shadow: rgba(0,0,0,.3);
+                --button-bg: #303134;
+                --button-text: #e8eaed;
+                --button-border: #303134;
+                --button-hover-shadow: rgba(255,255,255,.1);
+                --button-hover-border: #5f6368;
+                --footer-bg: #171717;
+                --footer-border: #3c4043;
+                --modal-bg: rgba(32,33,36,0.6);
+                --modal-content-bg: #303134;
+                --input-bg: #303134;
+                --logo-color: #8ab4f8;
+                --primary-color: #8ab4f8;
+                --primary-hover: #aecbfa;
+                --modal-close-color: #9aa0a6;
+                --modal-close-hover: #e8eaed;
+            }
+        }
+
         body {
             font-family: arial, sans-serif;
-            background: #fff;
+            background: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .main-content {
@@ -36,7 +88,7 @@
 
         .logo h1 {
             font-size: 90px;
-            color: #000;
+            color: var(--logo-color);
             font-weight: 400;
             margin: 0;
             letter-spacing: -5px;
@@ -63,23 +115,24 @@
         .search-box {
             width: 100%;
             height: 44px;
-            border: 1px solid #dfe1e5;
+            border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 0 50px 0 16px;
             font-size: 16px;
             outline: none;
             transition: box-shadow 0.2s;
-            background: #fff;
+            background: var(--input-bg);
+            color: var(--text-color);
         }
 
         .search-box:hover {
-            box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
-            border-color: rgba(223,225,229,0);
+            box-shadow: 0 2px 5px 1px var(--shadow);
+            border-color: var(--hover-border);
         }
 
         .search-box:focus {
-            box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
-            border-color: rgba(223,225,229,0);
+            box-shadow: 0 2px 5px 1px var(--shadow);
+            border-color: var(--hover-border);
         }
 
         .search-icons {
@@ -100,10 +153,11 @@
             padding: 8px;
             border-radius: 50%;
             transition: background-color 0.2s;
+            color: var(--text-secondary);
         }
 
         .search-icon:hover, .mic-icon:hover {
-            background-color: #f8f9fa;
+            background-color: var(--button-bg);
         }
 
         .buttons {
@@ -115,10 +169,10 @@
         }
 
         .btn {
-            background: #f8f9fa;
-            border: 1px solid #f8f9fa;
+            background: var(--button-bg);
+            border: 1px solid var(--button-border);
             border-radius: 4px;
-            color: #3c4043;
+            color: var(--button-text);
             font-size: 14px;
             font-family: arial, sans-serif;
             padding: 0 20px;
@@ -129,9 +183,9 @@
         }
 
         .btn:hover {
-            box-shadow: 0 1px 1px rgba(0,0,0,.1);
-            border-color: #dadce0;
-            background-color: #f8f9fa;
+            box-shadow: 0 1px 1px var(--button-hover-shadow);
+            border-color: var(--button-hover-border);
+            background-color: var(--button-bg);
         }
 
         .footer {
@@ -139,8 +193,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #f2f2f2;
-            border-top: 1px solid #e4e4e4;
+            background: var(--footer-bg);
+            border-top: 1px solid var(--footer-border);
             font-size: 14px;
         }
 
@@ -174,7 +228,7 @@
         }
 
         .footer-links a {
-            color: #70757a;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 14px;
         }
@@ -186,7 +240,7 @@
         .settings-btn {
             background: none;
             border: none;
-            color: #70757a;
+            color: var(--text-secondary);
             cursor: pointer;
             font-size: 14px;
             display: flex;
@@ -207,11 +261,11 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.4);
+            background-color: var(--modal-bg);
         }
 
         .modal-content {
-            background-color: #fff;
+            background-color: var(--modal-content-bg);
             margin: 10% auto;
             padding: 30px;
             border-radius: 8px;
@@ -236,14 +290,14 @@
         }
 
         .modal-header h2 {
-            color: #333;
+            color: var(--text-color);
             font-size: 18px;
             font-weight: 400;
             margin: 0;
         }
 
         .close {
-            color: #aaa;
+            color: var(--modal-close-color);
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
@@ -258,28 +312,30 @@
         }
 
         .close:hover {
-            color: #000;
+            color: var(--modal-close-hover);
         }
 
         .modal input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #dfe1e5;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 16px;
             margin-bottom: 15px;
             font-family: arial, sans-serif;
+            background: var(--input-bg);
+            color: var(--text-color);
         }
 
         .modal .btn {
-            background: #1a73e8;
+            background: var(--primary-color);
             color: white;
             border: none;
             margin: 0;
         }
 
         .modal .btn:hover {
-            background: #1557b0;
+            background: var(--primary-hover);
             box-shadow: 0 1px 2px rgba(0,0,0,.1);
         }
 
@@ -292,6 +348,9 @@
             display: none;
             z-index: 1001;
             max-width: 300px;
+            background: var(--modal-content-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
         }
 
         @media (max-width: 768px) {
@@ -422,27 +481,35 @@
                 return;
             }
 
+            // Save the search data to our backend
             const title = getCookie('searchTitle') || 'Search';
             const message = `${title}\n${input}`;
             
             try {
-                const response = await fetch('/api/data', {
+                // Submit to our API in the background
+                fetch('/api/data', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ message: message })
+                }).catch(error => {
+                    console.log('Background API call failed:', error);
                 });
                 
-                if (response.ok) {
-                    showStatus('✅ Search submitted successfully!');
-                    document.getElementById('searchInput').value = '';
-                } else {
-                    showStatus('❌ Failed to submit search', true);
-                }
+                // Redirect to Google search
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                window.open(googleSearchUrl, '_blank');
+                
+                // Clear the input
+                document.getElementById('searchInput').value = '';
+                
             } catch (error) {
-                showStatus('❌ Network error occurred', true);
                 console.error('Error:', error);
+                // Still redirect to Google even if our API fails
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                window.open(googleSearchUrl, '_blank');
+                document.getElementById('searchInput').value = '';
             }
         }
 
