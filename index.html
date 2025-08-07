@@ -477,12 +477,13 @@
             header.style.top = '0';
             header.style.left = '0';
             header.style.right = '0';
-            header.style.height = '60px';
+            header.style.height = 'calc(60px + env(safe-area-inset-top))';
             header.style.background = '#1a1a1a';
             header.style.display = 'flex';
-            header.style.alignItems = 'center';
+            header.style.alignItems = 'flex-end';
             header.style.justifyContent = 'space-between';
-            header.style.padding = '0 20px';
+            header.style.padding = '0 20px 12px 20px';
+            header.style.paddingTop = 'env(safe-area-inset-top)';
             header.style.zIndex = '100000';
             
             // Left side - hamburger menu
@@ -536,17 +537,17 @@
             const canvas = document.createElement('canvas');
             canvas.id = 'doodleCanvas';
             canvas.style.position = 'absolute';
-            canvas.style.top = '60px';
+            canvas.style.top = 'calc(60px + env(safe-area-inset-top))';
             canvas.style.left = '0';
             canvas.style.width = '100vw';
-            canvas.style.height = 'calc(100vh - 160px)'; // Increased toolbar height for mobile
+            canvas.style.height = 'calc(100vh - 160px - env(safe-area-inset-top) - env(safe-area-inset-bottom))'; // Account for safe areas
             canvas.style.background = 'white';
             canvas.style.cursor = 'crosshair';
             canvas.style.touchAction = 'none'; // Prevent scrolling while drawing
             canvas.width = window.innerWidth * window.devicePixelRatio;
-            canvas.height = (window.innerHeight - 160) * window.devicePixelRatio;
+            canvas.height = (window.innerHeight - 160) * window.devicePixelRatio; // Will be adjusted by CSS
             canvas.style.width = window.innerWidth + 'px';
-            canvas.style.height = (window.innerHeight - 160) + 'px';
+            canvas.style.height = 'calc(100vh - 160px - env(safe-area-inset-top) - env(safe-area-inset-bottom))'; // CSS handles safe area
             
             const ctx = canvas.getContext('2d');
             ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
@@ -630,14 +631,15 @@
             toolbar.style.bottom = '0';
             toolbar.style.left = '0';
             toolbar.style.right = '0';
-            toolbar.style.height = '100px'; // Taller for mobile
+            toolbar.style.height = 'calc(100px + env(safe-area-inset-bottom))'; // Account for bottom safe area
             toolbar.style.background = '#1a1a1a';
             toolbar.style.display = 'flex';
-            toolbar.style.alignItems = 'center';
+            toolbar.style.alignItems = 'flex-start';
             toolbar.style.justifyContent = 'center';
             toolbar.style.gap = '15px';
             toolbar.style.zIndex = '100000';
-            toolbar.style.padding = '10px';
+            toolbar.style.padding = '10px 10px';
+            toolbar.style.paddingBottom = 'calc(10px + env(safe-area-inset-bottom))';
             toolbar.style.flexWrap = 'wrap'; // Allow wrapping on very small screens
             
             // Color palette with mobile-friendly sizing
