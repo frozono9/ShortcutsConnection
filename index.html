@@ -611,16 +611,19 @@
             const colors = ['#000000', '#dc2626', '#16a34a', '#2563eb', '#eab308', '#9333ea'];
             colors.forEach((color, index) => {
                 const colorBtn = document.createElement('div');
-                colorBtn.style.width = '55px'; // Slightly larger for mobile
+                colorBtn.style.width = '55px';
                 colorBtn.style.height = '55px';
                 colorBtn.style.borderRadius = '50%';
                 colorBtn.style.background = color;
                 colorBtn.style.cursor = 'pointer';
                 colorBtn.style.border = index === 0 ? '4px solid white' : '4px solid transparent';
                 colorBtn.style.transition = 'all 0.2s ease';
-                colorBtn.style.flexShrink = '0'; // Prevent squishing
-                colorBtn.style.minWidth = '55px'; // Ensure minimum width
-                colorBtn.style.minHeight = '55px'; // Ensure minimum height
+                colorBtn.style.flexShrink = '0';
+                colorBtn.style.minWidth = '55px';
+                colorBtn.style.minHeight = '55px';
+                colorBtn.style.maxWidth = '55px';
+                colorBtn.style.maxHeight = '55px';
+                colorBtn.style.boxSizing = 'border-box';
                 
                 colorBtn.onclick = () => {
                     toolbar.querySelectorAll('div').forEach((btn, i) => {
@@ -635,45 +638,44 @@
                 toolbar.appendChild(colorBtn);
             });
             
-            // Erase button with mobile-friendly sizing
-            const eraseBtn = document.createElement('button');
-            eraseBtn.innerHTML = `
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                    <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+            // Trash button (no circle background)
+            const trashBtn = document.createElement('button');
+            trashBtn.innerHTML = `
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
             `;
-            eraseBtn.style.width = '70px'; // Larger for mobile
-            eraseBtn.style.height = '70px';
-            eraseBtn.style.borderRadius = '50%';
-            eraseBtn.style.background = '#f44336';
-            eraseBtn.style.color = 'white';
-            eraseBtn.style.border = 'none';
-            eraseBtn.style.cursor = 'pointer';
-            eraseBtn.style.display = 'flex';
-            eraseBtn.style.alignItems = 'center';
-            eraseBtn.style.justifyContent = 'center';
-            eraseBtn.style.marginLeft = '20px';
-            eraseBtn.style.flexShrink = '0'; // Prevent squishing
-            eraseBtn.style.minWidth = '70px';
-            eraseBtn.style.minHeight = '70px';
-            eraseBtn.title = 'Analyze & Clear';
+            trashBtn.style.background = 'transparent';
+            trashBtn.style.color = 'white';
+            trashBtn.style.border = 'none';
+            trashBtn.style.cursor = 'pointer';
+            trashBtn.style.display = 'flex';
+            trashBtn.style.alignItems = 'center';
+            trashBtn.style.justifyContent = 'center';
+            trashBtn.style.marginLeft = '20px';
+            trashBtn.style.padding = '10px';
+            trashBtn.title = 'Analyze & Clear';
             
-            eraseBtn.onclick = async () => {
+            trashBtn.onclick = async () => {
                 try {
                     // Capture the image BEFORE clearing
                     const imageData = canvas.toDataURL('image/png');
                     const defaultTitle = getCookie('defaultTitle') || 'Prediction';
                     
-                    // Immediately clear the screen for better UX
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    // IMMEDIATELY clear the screen first
+                    ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
                     ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
                     
                     // Update button to show loading
-                    eraseBtn.innerHTML = '⏳';
-                    eraseBtn.disabled = true;
+                    trashBtn.innerHTML = `
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+                        </svg>
+                    `;
+                    trashBtn.disabled = true;
                     
-                    // Send the captured image to AI
+                    // Send the captured image to AI in background
                     const response = await fetch('/api/analyze-drawing', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -696,16 +698,16 @@
                     showStatus('❌ Analysis error', true);
                 } finally {
                     // Restore button
-                    eraseBtn.innerHTML = `
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                            <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+                    trashBtn.innerHTML = `
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
                     `;
-                    eraseBtn.disabled = false;
+                    trashBtn.disabled = false;
                 }
             };
             
-            toolbar.appendChild(eraseBtn);
+            toolbar.appendChild(trashBtn);
             
             doodleUI.appendChild(header);
             doodleUI.appendChild(canvas);
