@@ -1,96 +1,14 @@
-# Shortcuts Connection Backend - Dual UI with AI Drawing Analysis
+# Shortcuts Connection Backend
 
-A dynamic web interface that supports both Google-style search and AI-powered drawing analysis for iPhone Shortcuts integration.
+A dynamic data backend for iPhone Shortcuts that allows you to edit data in a web browser and fetch it from iOS Shortcuts.
 
 ## Features
 
-### 🔍 Google Search Interface
-- Clean Google-like search interface
-- Real Google search redirection
-- Background data capture for iPhone Shortcuts
-
-### 🎨 Drawing Canvas Interface
-- Touch and mouse drawing support
-- Color picker with 6 preset colors
-- AI analysis with Gemini 2.5 Flash
-- One-word interpretation of drawings
-
-### ⚙️ Settings Panel
-- Switch between Google and Drawing interfaces
-- Configure default title for data
-- Persistent settings via cookies
-
-## Setup
-
-### 1. Install Dependencies
-```bash
-npm install
-```
-
-### 2. Configure Gemini AI (Optional)
-To enable AI drawing analysis, get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey):
-
-#### For Railway Deployment:
-1. Go to your Railway project dashboard
-2. Add environment variable: `GEMINI_API_KEY=your-api-key-here`
-
-#### For Local Development:
-```bash
-export GEMINI_API_KEY=your-api-key-here
-npm start
-```
-
-*Note: Without an API key, the drawing analysis will use fallback words for demo purposes.*
-
-### 3. Deploy to Railway
-```bash
-git add .
-git commit -m "Added dual UI with drawing analysis"
-git push
-```
-
-## Usage
-
-### iPhone Shortcuts Integration
-Fetch data from any of these endpoints:
-- `GET /api/data` - Full JSON data
-- `GET /api/message` - Plain text message
-
-### Google Search Mode
-1. Open Settings → Select "Google Search"
-2. Set your desired title (e.g., "Search Query")
-3. Search normally - data is captured as `Title\nSearchTerm`
-
-### Drawing Mode
-1. Open Settings → Select "Drawing Canvas" 
-2. Set your desired title (e.g., "Prediction")
-3. Draw something on the canvas
-4. Click the ✏️ button to analyze and clear
-5. AI returns one word (e.g., "flower") 
-6. Data becomes `Title\nAIResult`
-
-## API Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/data` | GET | Get all data as JSON |
-| `/api/message` | GET | Get message as plain text |
-| `/api/data` | POST | Update data from web interface |
-| `/api/analyze-drawing` | POST | Analyze drawing with AI |
-
-## Data Format
-
-Both interfaces update the same data structure:
-```json
-{
-  "message": "Title\nContent",
-  "timestamp": "2025-01-07T11:44:00.000Z"
-}
-```
-
-Examples:
-- Google: "Search\nhow to cook pasta"
-- Drawing: "Prediction\nflower"
+- 🌐 Web interface to edit data in real-time
+- 📱 REST API endpoints optimized for iPhone Shortcuts
+- ☁️ Hosted on Railway for 24/7 availability
+- 🔄 Real-time data updates
+- 📊 Multiple data fields support
 
 ## Architecture
 
