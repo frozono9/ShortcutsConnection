@@ -16,11 +16,8 @@
             --text-color: #202124;
             --text-secondary: #70757a;
             --border-color: #dfe1e5;
-            --hover-border: rgba(223,225,229,0);
-            --shadow: rgba(64,60,67,.16);
             --button-bg: #f8f9fa;
             --button-text: #3c4043;
-            --button-border: #f8f9fa;
             --button-hover-shadow: rgba(0,0,0,.1);
             --button-hover-border: #dadce0;
             --footer-bg: #f2f2f2;
@@ -41,11 +38,8 @@
                 --text-color: #e8eaed;
                 --text-secondary: #9aa0a6;
                 --border-color: #5f6368;
-                --hover-border: rgba(95,99,104,0);
-                --shadow: rgba(0,0,0,.3);
                 --button-bg: #303134;
                 --button-text: #e8eaed;
-                --button-border: #303134;
                 --button-hover-shadow: rgba(255,255,255,.1);
                 --button-hover-border: #5f6368;
                 --footer-bg: #171717;
@@ -63,12 +57,12 @@
             background: var(--bg-color);
             color: var(--text-color);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            margin: 0;
+            padding: 0;
         }
 
         #googleUI {
-            flex: 1;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
@@ -80,8 +74,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            margin-top: 0;
-            min-height: calc(100vh - 120px);
+            min-height: calc(100vh - 80px);
         }
 
         .logo {
@@ -111,17 +104,16 @@
             outline: none;
             background: var(--input-bg);
             color: var(--text-color);
-            box-shadow: 0 2px 4px var(--shadow);
+            box-shadow: 0 2px 4px rgba(64,60,67,.16);
         }
 
         .search-input:hover {
-            border-color: var(--hover-border);
-            box-shadow: 0 2px 8px var(--shadow);
+            box-shadow: 0 2px 8px rgba(64,60,67,.16);
         }
 
         .search-input:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 2px 8px var(--shadow);
+            box-shadow: 0 2px 8px rgba(64,60,67,.16);
         }
 
         .search-icon {
@@ -143,7 +135,7 @@
 
         .btn {
             background: var(--button-bg);
-            border: 1px solid var(--button-border);
+            border: 1px solid var(--button-bg);
             border-radius: 4px;
             color: var(--button-text);
             font-family: arial, sans-serif;
@@ -160,23 +152,7 @@
 
         .btn:hover {
             box-shadow: 0 1px 1px var(--button-hover-shadow);
-            background-color: var(--button-bg);
             border: 1px solid var(--button-hover-border);
-            color: var(--button-text);
-        }
-
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 60px;
-                margin-bottom: 20px;
-            }
-            .search-box {
-                width: 90vw;
-            }
-            .buttons-container {
-                flex-direction: column;
-                align-items: center;
-            }
         }
 
         .footer {
@@ -184,6 +160,9 @@
             border-top: 1px solid var(--footer-border);
             padding: 15px 30px;
             margin-top: auto;
+            position: sticky;
+            bottom: 0;
+            width: 100%;
         }
 
         .footer-row {
@@ -193,23 +172,10 @@
             flex-wrap: wrap;
         }
 
-        @media (max-width: 768px) {
-            .footer-row {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-
         .footer-links {
             display: flex;
             gap: 30px;
             flex-wrap: wrap;
-        }
-
-        @media (max-width: 768px) {
-            .footer-links {
-                justify-content: center;
-            }
         }
 
         .footer-links a {
@@ -228,7 +194,6 @@
             color: var(--text-secondary);
             font-size: 14px;
             cursor: pointer;
-            text-decoration: none;
         }
 
         .settings-btn:hover {
@@ -248,22 +213,12 @@
 
         .modal-content {
             background-color: var(--modal-content-bg);
-            margin: 10% auto;
+            margin: 15% auto;
             padding: 30px;
             border-radius: 8px;
             width: 400px;
             max-width: 90%;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 1000000;
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                margin: 20% auto;
-                padding: 20px;
-                width: 95%;
-            }
         }
 
         .modal-header {
@@ -287,12 +242,6 @@
             cursor: pointer;
             border: none;
             background: none;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .close:hover {
@@ -321,7 +270,6 @@
             font-family: arial, sans-serif;
             background: var(--input-bg);
             color: var(--text-color);
-            margin: 0;
         }
 
         .modal .btn {
@@ -333,7 +281,6 @@
 
         .modal .btn:hover {
             background: var(--primary-hover);
-            box-shadow: 0 1px 2px rgba(0,0,0,.1);
         }
 
         .status-message {
@@ -344,7 +291,6 @@
             border-radius: 4px;
             display: none;
             z-index: 1001;
-            max-width: 300px;
             font-size: 14px;
         }
 
@@ -358,6 +304,25 @@
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 60px;
+                margin-bottom: 20px;
+            }
+            .footer-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .footer-links {
+                justify-content: center;
+            }
+            .modal-content {
+                margin: 20% auto;
+                padding: 20px;
+                width: 95%;
+            }
         }
     </style>
 </head>
@@ -391,9 +356,7 @@
                 <div class="footer-links">
                     <a href="#">Privacy</a>
                     <a href="#">Terms</a>
-                    <button class="settings-btn" onclick="openSettings()">
-                        Settings
-                    </button>
+                    <button class="settings-btn" onclick="openSettings()">Settings</button>
                 </div>
             </div>
         </div>
@@ -456,18 +419,15 @@
             }, 3000);
         }
 
-        // Create doodling interface that matches doodleonline.art
+        // Create doodling interface
         function createDoodleUI() {
-            // Hide Google UI
             document.getElementById('googleUI').style.display = 'none';
             
-            // Remove any existing doodle UI
             const existingDoodleUI = document.querySelector('.doodle-ui');
             if (existingDoodleUI) {
                 existingDoodleUI.remove();
             }
             
-            // Create doodle UI container
             const doodleUI = document.createElement('div');
             doodleUI.className = 'doodle-ui';
             doodleUI.style.position = 'fixed';
@@ -477,9 +437,8 @@
             doodleUI.style.height = '100vh';
             doodleUI.style.background = 'white';
             doodleUI.style.zIndex = '99999';
-            doodleUI.style.fontFamily = 'system-ui, -apple-system, sans-serif';
             
-            // Create header
+            // Header
             const header = document.createElement('div');
             header.style.position = 'fixed';
             header.style.top = '0';
@@ -502,7 +461,7 @@
             `;
             header.appendChild(leftSide);
             
-            // Right side - icons (copy, share, settings)
+            // Right side - icons
             const rightSide = document.createElement('div');
             rightSide.style.display = 'flex';
             rightSide.style.gap = '15px';
@@ -538,45 +497,42 @@
             `;
             settingsIcon.onclick = openSettings;
             rightSide.appendChild(settingsIcon);
-            
             header.appendChild(rightSide);
             
-            // Create canvas
+            // Canvas
             const canvas = document.createElement('canvas');
             canvas.id = 'doodleCanvas';
             canvas.style.position = 'absolute';
             canvas.style.top = '60px';
             canvas.style.left = '0';
             canvas.style.width = '100vw';
-            canvas.style.height = 'calc(100vh - 140px)';
+            canvas.style.height = 'calc(100vh - 160px)'; // Increased toolbar height for mobile
             canvas.style.background = 'white';
             canvas.style.cursor = 'crosshair';
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight - 140;
+            canvas.style.touchAction = 'none'; // Prevent scrolling while drawing
+            canvas.width = window.innerWidth * window.devicePixelRatio;
+            canvas.height = (window.innerHeight - 160) * window.devicePixelRatio;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = (window.innerHeight - 160) + 'px';
             
-            // Initialize canvas drawing
             const ctx = canvas.getContext('2d');
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 3; // Slightly thinner for mobile
             
             let isDrawing = false;
             let currentColor = '#000000';
+            let lastX = 0;
+            let lastY = 0;
             
-            function startDrawing(e) {
-                isDrawing = true;
-                draw(e);
-            }
-            
-            function draw(e) {
-                if (!isDrawing) return;
-                
+            function getCoordinates(e) {
                 const rect = canvas.getBoundingClientRect();
                 let x, y;
                 
-                if (e.touches) {
+                if (e.touches && e.touches.length > 0) {
                     x = e.touches[0].clientX - rect.left;
                     y = e.touches[0].clientY - rect.top;
                 } else {
@@ -584,18 +540,40 @@
                     y = e.clientY - rect.top;
                 }
                 
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.strokeStyle = currentColor;
-                ctx.lineWidth = 5;
-                
-                ctx.lineTo(x, y);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(x, y);
+                return { x, y };
             }
             
-            function stopDrawing() {
+            function startDrawing(e) {
+                e.preventDefault();
+                isDrawing = true;
+                const coords = getCoordinates(e);
+                lastX = coords.x;
+                lastY = coords.y;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+            }
+            
+            function draw(e) {
+                if (!isDrawing) return;
+                e.preventDefault();
+                
+                const coords = getCoordinates(e);
+                
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = 3;
+                
+                ctx.lineTo(coords.x, coords.y);
+                ctx.stroke();
+                
+                lastX = coords.x;
+                lastY = coords.y;
+            }
+            
+            function stopDrawing(e) {
                 if (isDrawing) {
+                    e.preventDefault();
                     isDrawing = false;
                     ctx.beginPath();
                 }
@@ -607,54 +585,52 @@
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
             
-            // Touch events
-            canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                startDrawing(e);
-            });
-            canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                draw(e);
-            });
-            canvas.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                stopDrawing();
-            });
+            // Touch events with better handling
+            canvas.addEventListener('touchstart', startDrawing, { passive: false });
+            canvas.addEventListener('touchmove', draw, { passive: false });
+            canvas.addEventListener('touchend', stopDrawing, { passive: false });
+            canvas.addEventListener('touchcancel', stopDrawing, { passive: false });
             
-            // Create bottom toolbar
+            // Toolbar with mobile-optimized layout
             const toolbar = document.createElement('div');
             toolbar.style.position = 'fixed';
             toolbar.style.bottom = '0';
             toolbar.style.left = '0';
             toolbar.style.right = '0';
-            toolbar.style.height = '80px';
+            toolbar.style.height = '100px'; // Taller for mobile
             toolbar.style.background = '#1a1a1a';
             toolbar.style.display = 'flex';
             toolbar.style.alignItems = 'center';
             toolbar.style.justifyContent = 'center';
-            toolbar.style.gap = '20px';
+            toolbar.style.gap = '15px';
             toolbar.style.zIndex = '100000';
+            toolbar.style.padding = '10px';
+            toolbar.style.flexWrap = 'wrap'; // Allow wrapping on very small screens
             
-            // Color palette
+            // Color palette with mobile-friendly sizing
             const colors = ['#000000', '#dc2626', '#16a34a', '#2563eb', '#eab308', '#9333ea'];
             colors.forEach((color, index) => {
                 const colorBtn = document.createElement('div');
-                colorBtn.style.width = '50px';
-                colorBtn.style.height = '50px';
+                colorBtn.style.width = '55px';
+                colorBtn.style.height = '55px';
                 colorBtn.style.borderRadius = '50%';
                 colorBtn.style.background = color;
                 colorBtn.style.cursor = 'pointer';
                 colorBtn.style.border = index === 0 ? '4px solid white' : '4px solid transparent';
                 colorBtn.style.transition = 'all 0.2s ease';
+                colorBtn.style.flexShrink = '0';
+                colorBtn.style.minWidth = '55px';
+                colorBtn.style.minHeight = '55px';
+                colorBtn.style.maxWidth = '55px';
+                colorBtn.style.maxHeight = '55px';
+                colorBtn.style.boxSizing = 'border-box';
                 
                 colorBtn.onclick = () => {
-                    // Remove active from all colors
                     toolbar.querySelectorAll('div').forEach((btn, i) => {
                         if (i < colors.length) {
                             btn.style.border = '4px solid transparent';
                         }
                     });
-                    // Set active
                     colorBtn.style.border = '4px solid white';
                     currentColor = color;
                 };
@@ -662,37 +638,44 @@
                 toolbar.appendChild(colorBtn);
             });
             
-            // Erase button (this triggers AI analysis)
-            const eraseBtn = document.createElement('button');
-            eraseBtn.innerHTML = `
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                    <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+            // Trash button (no circle background)
+            const trashBtn = document.createElement('button');
+            trashBtn.innerHTML = `
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
             `;
-            eraseBtn.style.width = '60px';
-            eraseBtn.style.height = '60px';
-            eraseBtn.style.borderRadius = '50%';
-            eraseBtn.style.background = '#f44336';
-            eraseBtn.style.color = 'white';
-            eraseBtn.style.border = 'none';
-            eraseBtn.style.cursor = 'pointer';
-            eraseBtn.style.display = 'flex';
-            eraseBtn.style.alignItems = 'center';
-            eraseBtn.style.justifyContent = 'center';
-            eraseBtn.style.marginLeft = '30px';
-            eraseBtn.title = 'Analyze & Clear';
+            trashBtn.style.background = 'transparent';
+            trashBtn.style.color = 'white';
+            trashBtn.style.border = 'none';
+            trashBtn.style.cursor = 'pointer';
+            trashBtn.style.display = 'flex';
+            trashBtn.style.alignItems = 'center';
+            trashBtn.style.justifyContent = 'center';
+            trashBtn.style.marginLeft = '20px';
+            trashBtn.style.padding = '10px';
+            trashBtn.title = 'Analyze & Clear';
             
-            eraseBtn.onclick = async () => {
+            trashBtn.onclick = async () => {
                 try {
-                    // Get canvas data
+                    // Capture the image BEFORE clearing
                     const imageData = canvas.toDataURL('image/png');
                     const defaultTitle = getCookie('defaultTitle') || 'Prediction';
                     
-                    // Show loading state
-                    eraseBtn.innerHTML = '⏳';
-                    eraseBtn.disabled = true;
+                    // IMMEDIATELY clear the screen first
+                    ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
                     
-                    // Send to AI for analysis
+                    // Update button to show loading
+                    trashBtn.innerHTML = `
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+                        </svg>
+                    `;
+                    trashBtn.disabled = true;
+                    
+                    // Send the captured image to AI in background
                     const response = await fetch('/api/analyze-drawing', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -705,14 +688,7 @@
                     const result = await response.json();
                     
                     if (result.success) {
-                        // Clear canvas
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.fillStyle = '#ffffff';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        
-                        // Show success message
                         showStatus(`✅ AI detected: "${result.analysis}"`);
-                        console.log('Updated message:', result.message);
                     } else {
                         showStatus('❌ Analysis failed', true);
                     }
@@ -722,33 +698,27 @@
                     showStatus('❌ Analysis error', true);
                 } finally {
                     // Restore button
-                    eraseBtn.innerHTML = `
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                            <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+                    trashBtn.innerHTML = `
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
                     `;
-                    eraseBtn.disabled = false;
+                    trashBtn.disabled = false;
                 }
             };
             
-            toolbar.appendChild(eraseBtn);
+            toolbar.appendChild(trashBtn);
             
-            // Assemble UI
             doodleUI.appendChild(header);
             doodleUI.appendChild(canvas);
             doodleUI.appendChild(toolbar);
             document.body.appendChild(doodleUI);
-            
-            console.log('Doodle UI created successfully');
         }
 
-        // UI switching functions
         function switchUI(type) {
-            console.log('Switching to UI type:', type);
             const googleUI = document.getElementById('googleUI');
-            
-            // Remove any existing interfaces
             const doodleUI = document.querySelector('.doodle-ui');
+            
             if (doodleUI) {
                 doodleUI.remove();
             }
@@ -756,56 +726,36 @@
             if (type === 'doodle') {
                 createDoodleUI();
             } else {
-                // Show Google UI
                 googleUI.style.display = 'block';
             }
         }
 
         function openSettings() {
-            console.log('Opening settings modal');
             const modal = document.getElementById('settingsModal');
             const titleInput = document.getElementById('titleInput');
             const interfaceType = document.getElementById('interfaceType');
             
-            console.log('Modal element:', modal);
-            console.log('Title input element:', titleInput);
-            console.log('Interface type element:', interfaceType);
-            
-            if (!modal) {
-                console.error('Settings modal not found!');
-                return;
-            }
-            
-            // Load saved settings
             titleInput.value = getCookie('defaultTitle') || 'Prediction';
             
-            // Set current interface type
             const isDoodleMode = document.querySelector('.doodle-ui') !== null;
             interfaceType.value = isDoodleMode ? 'doodle' : 'google';
             
-            console.log('Setting modal display to block');
             modal.style.display = 'block';
-            console.log('Modal should now be visible');
         }
 
-        // Make sure openSettings is globally accessible
         window.openSettings = openSettings;
 
         function closeSettings() {
-            console.log('Closing settings modal');
             document.getElementById('settingsModal').style.display = 'none';
         }
 
         function saveSettings() {
-            console.log('Saving settings');
             const title = document.getElementById('titleInput').value.trim() || 'Prediction';
             const interfaceType = document.getElementById('interfaceType').value;
             
-            // Save settings to cookies
             setCookie('defaultTitle', title);
             setCookie('interfaceType', interfaceType);
             
-            // Switch UI
             switchUI(interfaceType);
             closeSettings();
             
@@ -847,24 +797,9 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, checking saved interface preference...');
             const savedInterfaceType = getCookie('interfaceType') || 'google';
-            console.log('Saved interface type:', savedInterfaceType);
             switchUI(savedInterfaceType);
         });
-
-        // Load current data on page load for debugging
-        async function loadCurrentData() {
-            try {
-                const response = await fetch('/api/data');
-                const data = await response.json();
-                console.log('Current data:', data);
-            } catch (error) {
-                console.error('Failed to load current data:', error);
-            }
-        }
-
-        loadCurrentData();
     </script>
 </body>
 </html>
