@@ -1,5 +1,6 @@
-<svg width="800" height="800" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 3C6.34315 3 5 4.34315 5 6V8C5 9.65685 6.34315 11 8 11H10C11.6569 11 13 9.65685 13 8V6C13 4.34315 11.6569 3 10 3H8Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M14 13C12.3431 13 11 14.3431 11 16V18C11 19.6569 12.3431 21 14 21H16C17.6569 21 19 19.6569 19 18V16C19 14.3431 17.6569 13 16 13H14Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M9 11L15 13" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M200 150C155.817 150 120 185.817 120 230V370C120 414.183 155.817 450 200 450H340C384.183 450 420 414.183 420 370V230C420 185.817 384.183 150 340 150H200Z" stroke="#000" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M460 350C415.817 350 380 385.817 380 430V570C380 614.183 415.817 650 460 650H600C644.183 650 680 614.183 680 570V430C680 385.817 644.183 350 600 350H460Z" stroke="#000" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M270 450L530 350" stroke="#000" stroke-width="40" stroke-linecap="round"/>
+<path d="M530 450L270 350" stroke="#000" stroke-width="40" stroke-linecap="round"/>
 </svg>
