@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' })); // Increased limit for canvas images
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); // Increased limit for canvas images
 app.use(express.static('public'));
 
 // In-memory storage (you can replace this with a database)
