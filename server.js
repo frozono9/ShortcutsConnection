@@ -121,7 +121,7 @@ function activateTrigger() {
   // Reset trigger after 5 seconds
   setTimeout(() => {
     triggerState.triggered = false;
-  }, 5000);
+  }, 2000);
 }
 
 // AI Drawing Analysis endpoint
